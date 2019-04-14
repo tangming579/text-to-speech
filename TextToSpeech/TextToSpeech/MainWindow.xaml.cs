@@ -108,7 +108,7 @@ namespace TextToSpeech
             httpwebrequest.Method = "POST";
 
             String t_s_1970 = TimestampSince1970;
-            String checksum = GetMD5(apiKey + t_s_1970 + base64_str);//准备好一个checksum备用
+            String checksum = Helpers.GetMD5(apiKey + t_s_1970 + base64_str);//准备好一个checksum备用
             httpwebrequest.Headers.Clear();
             httpwebrequest.Headers.Add("X-Param", base64_str);
             httpwebrequest.Headers.Add("X-CurTime", t_s_1970);
@@ -167,31 +167,7 @@ namespace TextToSpeech
             var client = sender as WebClient;
 
             var a = e.Result;
-        }
-        public static string GetMD5(string source, bool need16 = false, bool toUpper = false)
-        {
-            var t_toUpper = toUpper ? "X2" : "x2";
-            if (string.IsNullOrWhiteSpace(source))
-            {
-                return string.Empty;
-            }
-            string t_md5_code = string.Empty;
-            try
-            {
-                MD5 t_md5 = MD5.Create();
-                byte[] _t = t_md5.ComputeHash(Encoding.UTF8.GetBytes(source));
-                for (int i = 0; i < _t.Length; i++)
-                {
-                    t_md5_code += _t[i].ToString(t_toUpper);
-                }
-                if (need16)
-                {
-                    t_md5_code = t_md5_code.Substring(8, 16);
-                }
-            }
-            catch { }
-            return t_md5_code;
-        }
+        }        
         #endregion
 
         #region 有道云
@@ -203,7 +179,19 @@ namespace TextToSpeech
             string appKey = "2b0423b61a13d0c9";
             string appSecret = "O1Fb0kYPWsxsl0r02CrJyD7mcJHpQH1r";
 
-            /** 目标语言 */
+            /** 目标语言 
+             
+            语言	    代码	支持发音类型
+            中文	    zh-CHS	女声
+            日文	    ja	    女声、男声
+            英文	    en	    女声、男声
+            韩文	    ko	    女声
+            法文	    fr	    女声、男声
+            葡萄牙文	pt	    女声
+            西班牙文	es	    女声、男声
+            俄文	    ru	    女声、男声             
+             
+             */
             string langType = "pt";
             /** 音频格式：目前支持pcm和wav(pcm编码) */
             string format = "wav";

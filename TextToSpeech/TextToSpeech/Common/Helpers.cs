@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,30 +9,29 @@ namespace TextToSpeech.Common
 {
     public static class Helpers
     {
-        /// <summary>
-        /// 使用 Encoding.UTF8 对 s 加密
-        /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
-        public static string ToMD5(this string s)
+        public static string GetMD5(this string source, bool need16 = false, bool toUpper = false)
         {
-            return ToMD5(s, Encoding.UTF8);
-        }
-        public static string ToMD5(this string s, Encoding encoding)
-        {
-            using (var md5 = System.Security.Cryptography.MD5.Create())
+            var t_toUpper = toUpper ? "X2" : "x2";
+            if (string.IsNullOrWhiteSpace(source))
             {
-                var inputBytes = encoding.GetBytes(s);
-                var hashBytes = md5.ComputeHash(inputBytes);
-
-                var sb = new StringBuilder();
-                foreach (var hashByte in hashBytes)
-                {
-                    sb.Append(hashByte.ToString("X2"));
-                }
-
-                return sb.ToString();
+                return string.Empty;
             }
+            string t_md5_code = string.Empty;
+            try
+            {
+                MD5 t_md5 = MD5.Create();
+                byte[] _t = t_md5.ComputeHash(Encoding.UTF8.GetBytes(source));
+                for (int i = 0; i < _t.Length; i++)
+                {
+                    t_md5_code += _t[i].ToString(t_toUpper);
+                }
+                if (need16)
+                {
+                    t_md5_code = t_md5_code.Substring(8, 16);
+                }
+            }
+            catch { }
+            return t_md5_code;
         }
         public static string Base64Encode(this string s)
         {

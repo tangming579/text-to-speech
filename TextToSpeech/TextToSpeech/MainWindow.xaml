@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="txtMsg" HorizontalAlignment="Left" Height="23" Margin="209,88,0,0" TextWrapping="Wrap" Text="欢迎使用同方威视自助行李交运系统" VerticalAlignment="Top" Width="364"/>
+        <TextBox x:Name="txtMsg" HorizontalAlignment="Left" Height="23" Margin="209,88,0,0" TextWrapping="Wrap" Text="欢迎使用语音合成系统" VerticalAlignment="Top" Width="364"/>
         <TextBlock HorizontalAlignment="Left" Margin="117,91,0,0" TextWrapping="Wrap" Text="生成语音文字：" VerticalAlignment="Top" RenderTransformOrigin="0.857,-0.5"/>
         <TextBlock HorizontalAlignment="Left" Margin="247,142,0,0" TextWrapping="Wrap" Text="语速：" VerticalAlignment="Top" RenderTransformOrigin="0.857,-0.5"/>
         <Slider x:Name="sldSpeed" HorizontalAlignment="Left" Value="5" Margin="290,140,0,0" VerticalAlignment="Top" Width="106" Minimum="1" Maximum="10"/>
