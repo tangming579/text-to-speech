@@ -167,7 +167,7 @@ namespace TextToSpeech
             var client = sender as WebClient;
 
             var a = e.Result;
-        }        
+        }
         #endregion
 
         #region 有道云
@@ -192,7 +192,7 @@ namespace TextToSpeech
             俄文	    ru	    女声、男声             
              
              */
-            string langType = "pt";
+            string langType = (cboLanguage.SelectedItem as ComboBoxItem).Tag + "";
             /** 音频格式：目前支持pcm和wav(pcm编码) */
             string format = "wav";
             /** 音频采样率：目前支持16000和8000 */
