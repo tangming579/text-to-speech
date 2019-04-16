@@ -34,10 +34,14 @@ namespace TextToSpeech
             InitializeComponent();
         }
 
-        private void btnOpen_Click(object sender, RoutedEventArgs e)
+        public void OpenDir()
         {
             var path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output");
             System.Diagnostics.Process.Start(path);
+        }
+        private void btnOpen_Click(object sender, RoutedEventArgs e)
+        {
+            OpenDir();
         }
 
         #region 百度
@@ -67,7 +71,10 @@ namespace TextToSpeech
                         Thread.Sleep(1000);
                         File.WriteAllBytes(path, result.Data);
 
-                        MessageBox.Show("生成成功");
+                        if (chkOpenDir.IsChecked == true)
+                            OpenDir();
+                        else
+                            MessageBox.Show("生成成功");
                     }
                 }));
 
@@ -143,8 +150,10 @@ namespace TextToSpeech
                     sw.Close();
                     res_strem.Dispose();
                 }
-
-                MessageBox.Show("生成成功");
+                if (chkOpenDir.IsChecked == true)
+                    OpenDir();
+                else
+                    MessageBox.Show("生成成功");
             }
         }
         public class Parameter
@@ -215,7 +224,7 @@ namespace TextToSpeech
             string fileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output", $"{txtMsg.Text}.mp3");
             Post(url, dic, fileName);
         }
-        public static void Post(string url, Dictionary<String, String> dic, String fileName)
+        public void Post(string url, Dictionary<String, String> dic, String fileName)
         {
             string result = "";
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
@@ -244,7 +253,15 @@ namespace TextToSpeech
             if (resp.ContentType.ToLower().Equals("audio/mp3"))
             {
                 var rst = SaveBinaryFile(resp, fileName);
-                MessageBox.Show(rst ? "生成成功" : "生成失败");
+                if (rst)
+                {
+                    if (chkOpenDir.IsChecked == true)
+                        OpenDir();
+                    else
+                        MessageBox.Show("生成成功");
+                }
+                else
+                    MessageBox.Show("生成失败");
             }
             else
             {

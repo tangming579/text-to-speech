@@ -29,7 +29,8 @@
             <Button x:Name="btnKeda" Content="科大讯飞" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="75" Click="btnKeda_Click"/>
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="btnYoudao" Content="有道云" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="75" Click="btnYoudao_Click"/>
-                <ComboBox x:Name="cboLanguage" VerticalAlignment="Bottom" Margin="20,0,0,0" MinWidth="70" SelectedIndex="0">
+                <TextBlock Text="生成语言：" Margin="20,0,0,0" VerticalAlignment="Bottom"></TextBlock>
+                <ComboBox x:Name="cboLanguage" VerticalAlignment="Bottom" Margin="10,0,0,0" MinWidth="70" SelectedIndex="0">
                     <ComboBoxItem Content="中文" Tag="zh-CHS"></ComboBoxItem>
                     <ComboBoxItem Content="英文" Tag="en"></ComboBoxItem>
                     <ComboBoxItem Content="日文" Tag="ja"></ComboBoxItem>
@@ -37,11 +38,12 @@
                     <ComboBoxItem Content="法文" Tag="fr"></ComboBoxItem>
                     <ComboBoxItem Content="俄文" Tag="ru"></ComboBoxItem>
                     <ComboBoxItem Content="葡萄牙文" Tag="pt"></ComboBoxItem>
-                    <ComboBoxItem Content="西班牙文" Tag="es"></ComboBoxItem>                   
+                    <ComboBoxItem Content="西班牙文" Tag="es"></ComboBoxItem>
                 </ComboBox>
             </StackPanel>
         </StackPanel>        
-        <Button x:Name="btnOpen" Content="打开目录" HorizontalAlignment="Left" Margin="467,253,0,0" VerticalAlignment="Top" Width="75" Click="btnOpen_Click"/>
+        <Button x:Name="btnOpen" Content="打开目录" HorizontalAlignment="Left" Margin="588,234,0,0" VerticalAlignment="Top" Width="75" Click="btnOpen_Click"/>
+        <CheckBox x:Name="chkOpenDir" Content="生成后打开目录" HorizontalAlignment="Left" Margin="588,299,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
