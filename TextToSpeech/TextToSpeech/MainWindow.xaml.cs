@@ -21,6 +21,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TextToSpeech.Common;
+using Path = System.IO.Path;
 
 namespace TextToSpeech
 {
@@ -66,7 +67,10 @@ namespace TextToSpeech
                 {
                     lock (obj)
                     {
-                        var path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output", $"{name}{DateTime.Now:yyyyMMddHHmmssffff}.mp3");
+                        var outputDic = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output");
+                        if (!Directory.Exists(outputDic))
+                            Directory.CreateDirectory(outputDic);
+                        var path = System.IO.Path.Combine(outputDic, $"{name}{DateTime.Now:yyyyMMddHHmmssffff}.mp3");
                         if (File.Exists(path)) File.Delete(path);
                         Thread.Sleep(1000);
                         File.WriteAllBytes(path, result.Data);
@@ -142,7 +146,10 @@ namespace TextToSpeech
             }
             else
             {
-                var path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output", $"{txtMsg.Text}{DateTime.Now:yyyyMMddHHmmssffff}.mp3");
+                var outputDic = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output");
+                if (!Directory.Exists(outputDic))
+                    Directory.CreateDirectory(outputDic);
+                var path = System.IO.Path.Combine(outputDic, $"{txtMsg.Text}{DateTime.Now:yyyyMMddHHmmssffff}.mp3");
                 using (StreamWriter sw = new StreamWriter(path))
                 {
                     res_strem.CopyTo(sw.BaseStream);
@@ -221,7 +228,10 @@ namespace TextToSpeech
             dic.Add("langType", langType);
             dic.Add("salt", salt);
             dic.Add("sign", sign);
-            string fileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output", $"{txtMsg.Text}.mp3");
+            var outputDic = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output");
+            if (!Directory.Exists(outputDic))
+                Directory.CreateDirectory(outputDic);
+            string fileName = System.IO.Path.Combine(outputDic, $"{txtMsg.Text}.mp3");
             Post(url, dic, fileName);
         }
         public void Post(string url, Dictionary<String, String> dic, String fileName)
