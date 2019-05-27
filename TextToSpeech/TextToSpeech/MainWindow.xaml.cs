@@ -63,25 +63,18 @@ namespace TextToSpeech
             if (result.ErrorCode == 0)  // 或 result.Success
             {
                 string name = txtMsg.Text;/* + DateTime.Now.ToString("yyyyMMddHHssffff")*/;
-                Task.Run(new Action(() =>
-                {
-                    lock (obj)
-                    {
-                        var outputDic = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output");
-                        if (!Directory.Exists(outputDic))
-                            Directory.CreateDirectory(outputDic);
-                        var path = System.IO.Path.Combine(outputDic, $"{name}{DateTime.Now:yyyyMMddHHmmssffff}.mp3");
-                        if (File.Exists(path)) File.Delete(path);
-                        Thread.Sleep(1000);
-                        File.WriteAllBytes(path, result.Data);
+                var outputDic = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output");
+                if (!Directory.Exists(outputDic))
+                    Directory.CreateDirectory(outputDic);
+                var path = System.IO.Path.Combine(outputDic, $"{name}百度{DateTime.Now:yyyyMMddHHmmssffff}.mp3");
+                if (File.Exists(path)) File.Delete(path);
+                Thread.Sleep(1000);
+                File.WriteAllBytes(path, result.Data);
 
-                        if (chkOpenDir.IsChecked == true)
-                            OpenDir();
-                        else
-                            MessageBox.Show("生成成功");
-                    }
-                }));
-
+                if (chkOpenDir.IsChecked == true)
+                    OpenDir();
+                else
+                    MessageBox.Show("生成成功");
             }
         }
 
@@ -149,7 +142,7 @@ namespace TextToSpeech
                 var outputDic = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output");
                 if (!Directory.Exists(outputDic))
                     Directory.CreateDirectory(outputDic);
-                var path = System.IO.Path.Combine(outputDic, $"{txtMsg.Text}{DateTime.Now:yyyyMMddHHmmssffff}.mp3");
+                var path = System.IO.Path.Combine(outputDic, $"{txtMsg.Text}科大讯飞{DateTime.Now:yyyyMMddHHmmssffff}.mp3");
                 using (StreamWriter sw = new StreamWriter(path))
                 {
                     res_strem.CopyTo(sw.BaseStream);
@@ -168,7 +161,7 @@ namespace TextToSpeech
             public string auf { get; set; } = "audio/L16;rate=16000";
             public string aue { get; set; } = "lame";
             public string voice_name { get; set; } = "xiaoyan";
-            public string speed { get; set; } = "40";
+            public string speed { get; set; } = "50";
             public string volume { get; set; } = "70";
             public string pitch { get; set; } = "50";
             public string engine_type { get; set; } = "intp65";
@@ -231,8 +224,8 @@ namespace TextToSpeech
             var outputDic = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output");
             if (!Directory.Exists(outputDic))
                 Directory.CreateDirectory(outputDic);
-            string fileName = System.IO.Path.Combine(outputDic, $"{txtMsg.Text}.mp3");
-            Post(url, dic, fileName);
+            var path = System.IO.Path.Combine(outputDic, $"{txtMsg.Text}有道云{DateTime.Now:yyyyMMddHHmmssffff}.mp3");
+            Post(url, dic, path);
         }
         public void Post(string url, Dictionary<String, String> dic, String fileName)
         {
